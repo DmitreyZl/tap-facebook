@@ -65,7 +65,7 @@ class AdsInsightStream(Stream):
 
     @property
     def primary_keys(self) -> list[str] | None:
-        return ["date_start", "account_id"] + self._report_definition["breakdowns"]
+        return ["date_start", "account_id", "campaign_id"] + self._report_definition["breakdowns"]
 
     @primary_keys.setter
     def primary_keys(self, new_value: list[str] | None) -> None:
