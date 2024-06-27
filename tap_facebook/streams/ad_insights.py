@@ -205,10 +205,16 @@ class AdsInsightStream(Stream):
     ) -> pendulum.Date:
         lookback_window = self._report_definition["lookback_window"]
 
-        config_start_date = pendulum.parse(self.config["start_date"]).date()
-        incremental_start_date = pendulum.parse(
-            self.get_starting_replication_key_value(context),
-        ).date()
+        if self.config.get("start_date"):
+            config_start_date = pendulum.parse(self.config["start_date"]).date()
+            incremental_start_date = pendulum.parse(
+                self.get_starting_replication_key_value(context),
+            ).date()
+        else:
+            config_start_date = pendulum.today().date()
+            config_start_date = config_start_date.subtract(days=7)
+            incremental_start_date = config_start_date
+
         lookback_start_date = incremental_start_date.subtract(days=lookback_window)
 
         # Don't use lookback if this is the first sync. Just start where the user requested.
