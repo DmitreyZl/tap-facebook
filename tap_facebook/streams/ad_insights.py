@@ -212,7 +212,7 @@ class AdsInsightStream(Stream):
             ).date()
         else:
             config_start_date = pendulum.today().date()
-            config_start_date = config_start_date.subtract(days=7)
+            config_start_date = config_start_date.subtract(days=1)
             incremental_start_date = config_start_date
 
         lookback_start_date = incremental_start_date.subtract(days=lookback_window)
