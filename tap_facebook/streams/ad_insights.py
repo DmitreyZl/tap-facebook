@@ -212,7 +212,7 @@ class AdsInsightStream(Stream):
             ).date()
         else:
             config_start_date = pendulum.today().date()
-            config_start_date = config_start_date.subtract(days=1)
+            config_start_date = config_start_date.subtract(days=7)
             incremental_start_date = config_start_date
 
         lookback_start_date = incremental_start_date.subtract(days=lookback_window)
@@ -273,10 +273,7 @@ class AdsInsightStream(Stream):
                 "fields": columns,
                 "time_increment": time_increment,
                 "limit": 100,
-                "action_attribution_windows": [
-                    self._report_definition["action_attribution_windows_view"],
-                    self._report_definition["action_attribution_windows_click"],
-                ],
+                "action_attribution_windows": ['1d_view', '1d_click', '7d_view', '7d_click'],
                 "time_range": {
                     "since": report_start.to_date_string(),
                     "until": report_end.to_date_string(),
