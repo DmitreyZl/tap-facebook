@@ -211,10 +211,11 @@ class AdsInsightStream(Stream):
                 self.get_starting_replication_key_value(context),
             ).date()
         else:
+            #upload history
             config_start_date = pendulum.today().date()
-            config_start_date = config_start_date.subtract(days=1)
+            config_start_date = config_start_date.subtract(days=230)
             incremental_start_date = config_start_date
-
+        
         lookback_start_date = incremental_start_date.subtract(days=lookback_window)
 
         # Don't use lookback if this is the first sync. Just start where the user requested.
